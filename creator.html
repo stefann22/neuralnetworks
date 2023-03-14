@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, 
+                maximum-scale=0.9, user-scalable=0">
+        <meta charset="UTF-8">
+        <title>Data creator</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+
+    <body>
+        <div id="content">
+            <h1>Data creator</h1>
+
+            <div>
+                <input id="student" type="text"
+                    placeholder="numele tau">
+                <span id="instructions"></span>    
+                <button id="advanceBtn" onclick="start();">START</button>
+            </div>
+            
+
+            <br>
+            <div id="sketchPadContainer" 
+                style="visibility:hidden;">
+            </div>
+        </div>
+        <script src="js/draw.js"></script> 
+        <script src="js/sketchPad.js"></script>
+        
+
+        <script type="text/javascript">
+
+            let index = 0;
+            const labels = ["masina", "peste", "casa", "copac", "bicicleta", "creion", "ceas"];
+
+            const data = {
+                student: null,
+                session: new Date().getTime(),
+                drawings: {}
+            }
+
+            const sketchPad = new SketchPad(sketchPadContainer);
+
+
+            function start() {
+                if(student.value=="") {
+                    alert("Scrie numele tau");
+                    return;
+                }
+
+                data.student = student.value;
+                student.style.display = "none";
+                sketchPadContainer.style.visibility = "visible";
+
+                const label = labels[index];
+                instructions.innerHTML = "Deseneaza un / o " + label;
+
+                advanceBtn.innerHTML = "NEXT";
+                advanceBtn.onclick = next;
+            }
+
+            function next() {
+
+                if(sketchPad.paths.length == 0) {
+                    alert("Deseneaza ceva");
+                    return;
+                }
+
+                const label = labels[index];
+                data.drawings[label] = sketchPad.paths;
+                sketchPad.reset();
+
+                index++;
+
+                if(index<label.length) {
+                    const nextLabel = labels[index];
+                    instructions.innerHTML = "Deseneaza un / o " + nextLabel;
+                }
+                else {
+                    sketchPadContainer.style.visibility = "hidden";
+                    instructions.innerHTML = "Multumesc!";
+
+                    advanceBtn.innerHTML = "SAVE";
+                    advanceBtn.onclick = save;
+                }
+            }
+
+            function save() {
+                advanceBtn.style.display="none";
+                instructions.innerHTML = "Salveaza fisierul!";
+
+                const element = document.createElement('a');
+                element.setAttribute('href',
+                    'data:text/plain;charset=utf-8,' + 
+                    encodeURIComponent(JSON.stringify(data))
+                );
+
+                const fileName = data.session + ".json";
+                element.setAttribute('download', fileName);
+
+                element.style.display = "none";
+                document.body.appendChild(element);
+                element.click();
+                document.body.removeChild(element);
+            }
+        </script>
+    </body>
+</html>
