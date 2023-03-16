@@ -17,3 +17,15 @@ utils.printProgress = (count, max) => {
 if(typeof module !== 'undefined') {
     module.exports = utils;
 }
+
+utils.groupBy = (objArray, key) => {
+    const groups = {};
+    for(let obj of objArray) {
+        const val = obj[key];
+        if(groups[val] == null) {
+            groups[val] = [];
+        }
+        groups[val].push(obj);
+    }
+    return groups;
+}
