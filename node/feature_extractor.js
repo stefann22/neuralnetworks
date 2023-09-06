@@ -1,5 +1,5 @@
 const constants = require('../common/constants');
-const features = require('../common/features');
+const featureFunctions = require('../common/featureFunctions.js');
 
 const fs = require('fs');
 console.log("Extracting features...");
