@@ -47,6 +47,11 @@ class Chart{
       this.#draw();
    }
 
+   hideDynamicPoint() {
+      this.dynamicPoint = null;
+      this.#draw();
+   }
+
    #addEventListeners(){
       const {canvas,dataTrans,dragInfo}=this;
       canvas.onmousedown=(evt)=>{
@@ -247,7 +252,7 @@ class Chart{
             this.pixelBounds,
             this.dynamicPoint
          );
-         graphics.drawPoint(ctx, pixelLoc, rgba(0,0,0,0.7), 1000000);
+         graphics.drawPoint(ctx, pixelLoc, "rgba(255,255,255,0.7)", 1000000);
          graphics.drawPoint(ctx, pixelLoc, 'black');
       }
 

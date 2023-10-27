@@ -21,10 +21,10 @@ for (const sample of samples) {
             constants.JSON_DIR + "/" + sample.id + ".json"
         )
     );
-    sample.point = [
-        features.getPathCount(paths),
-        features.getPointCount(paths)
-    ];
+
+    const functions = featureFunctions.inUse.map(f=>f.function);
+    sample.point = functions.map(f=>f(paths));
+    
 }
 
 const featuresNames = [
