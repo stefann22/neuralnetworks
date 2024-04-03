@@ -90,3 +90,10 @@ button:disabled:hover {
     padding: 10;
     
 }
+
+ 
+#predictedLabelContainer {
+    color: white;
+    font-size: 30px;
+    position: relative;
+}

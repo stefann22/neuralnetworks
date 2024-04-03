@@ -27,10 +27,7 @@ for (const sample of samples) {
     
 }
 
-const featuresNames = [
-    "Path Count",
-    "Point Count"
-];
+const featuresNames = featureFunctions.inUse.map(f => f.name);
 
 fs.writeFileSync(constants.FEATURES,
     JSON.stringify({
